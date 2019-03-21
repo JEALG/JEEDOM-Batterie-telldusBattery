@@ -1,22 +1,23 @@
 <div style="padding:0;width:90px;min-height:62px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
  	<!-- Info Widget
 		Basé sur les widget de 	: Manticus
-		Mise à jour 			: JAG 20190317 : ajout centrer widget (merci à Antoinekl1)
+		Mise à jour 			: JAG 20190318 : Correction Bug non actualisation des données (merci à Antoinekl1 & cadavor)
 	-->
 	<center>
 	<div class="row">
 	<center>
 		<div class="cmdName" id="cmdName#id#" style="font-weight: bold;font-size : 10px; #hideCmdName#;">#name_display# </div>
-      	<span class="spanCmd#id#" style="font-size: 0.8em;font-weight: bold;">#state##unite#</span><br>	
+      	<span class="spanCmd#id# state label-info" style="font-size: 1m;font-weight: bold;">#state##unite#</span><br>	
 		<div style="font-size: 2.5em;margin-top:-10px;" class="iconCmd"></div>
       	<!-- Historique -->
-      		<div style="#displayHistory# font-weight: bold;font-size : 10px;margin-top:-5px;">
+      		<div style="#displayHistory# font-size : 10px;margin-top:-5px;">
       			<span title="Min" class="tooltips">#minHistoryValue##unite#</span>|<span title="Moyenne" class="tooltips" >#averageHistoryValue##unite#</span>|<span title="Max" class="tooltips">#maxHistoryValue##unite#</span> <i class="#tendance#"></i>
       		</div>
 	</center>
 	</div>
 	</center>
   	<script>
+	jeedom.cmd.update['#id#'] = function(_options){
 		// Options de personnalisation avec valeur par defaut
           // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
               var srcImgHeight 	= (is_numeric('#sizeh#'))    ? parseFloat('#sizeh#') 	: 65;
@@ -27,41 +28,41 @@
               var level_40  	= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
               var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
               var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
+      		  var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
         // Paramétrage des images
-              var srcImg 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
+			  var srcImgURL 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
+      		  var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "battery_";
       // Update
-			var iconUpdate = function (state){
-                $('.cmd[data-cmd_uid=#uid#] .iconCmd').empty();
-                if (state == level_0 ) {
-                    level 		= "0";
-                  	$(".spanCmd#id#").css( "color", "#f42433" ); 
-                } else if (state > level_0  && state <= level_20 ) {
-                    level 		= "20";
-                  	$(".spanCmd#id#").css( "color", "#f42433" );
-                } else if (state > level_20 && state <= level_40) {
-                    level 		= "40";
-                  	$(".spanCmd#id#").css( "color", "#f09c39" );
-                } else if (state > level_40 && state <= level_60) {
-                  	level 		= "60";
-                  	$(".spanCmd#id#").css( "color", "#f2f02c" );
-                } else if (state > level_60 && state <= level_80 ) {
-                  	level = "80";
-                  	$(".spanCmd#id#").css( "color", "#f09c39" );
-                } else if (state > level_80 && state <= 100) {
-                  	level 		= "100";
-				   	$(".spanCmd#id#").css( "color", "#5df114" );
-                } else {
-                  	level 		= "error";
-		        	$(".spanCmd#id#").css( "color", "#f42433" );
-                }
-              	// Update Value or img
-              		$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImg+'battery_' +level+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">'); 
-			$('.cmd[data-cmd_uid=#uid#] .state').text(state);
-			};
-	jeedom.cmd.update['#id#'] = function(_options){
-		$('.cmd[data-cmd_uid=#uid#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate)
-		iconUpdate(_options.display_value);
-	}
-	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
+			var srcPictureID;     
+			var State = parseFloat(_options.display_value);	
+			if (State <= level_0){
+              	srcPictureID = "20";
+              	$(".spanCmd#id#").css( "color", "#f42433" );
+            } else if (State > level_0 && State <= level_20){
+              	srcPictureID = "20";
+              	$(".spanCmd#id#").css( "color", "#f42433" );
+            } else if (State > level_20 && State <= level_40){
+              	srcPictureID = "40";
+              	$(".spanCmd#id#").css( "color", "#f09c39" );
+            } else if (State > level_40 && State <=level_60){
+              	srcPictureID = "60";
+              	$(".spanCmd#id#").css( "color", "#f2f02c" );
+            } else if (State > level_60 && State <=level_80){
+              	srcPictureID = "80";
+              	$(".spanCmd#id#").css( "color", "#f09c39" );
+            } else if (State > level_80 && State <=level_100){
+              	srcPictureID = "100";
+              	$(".spanCmd#id#").css( "color", "#5df114" );
+            } else {
+              	srcPictureID = "error";
+              	$(".spanCmd#id#").css( "color", "#f42433" );
+            }    
+   
+		// Update Value or img
+          	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">'); 
+			$('.cmd[data-cmd_uid=#uid#] .state').text(State+'#unite#');
+			$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
+		}     
+   	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'}); 
 	</script>
 </div>
