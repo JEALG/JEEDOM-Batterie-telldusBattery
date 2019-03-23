@@ -20,49 +20,53 @@
 	jeedom.cmd.update['#id#'] = function(_options){
 		// Options de personnalisation avec valeur par defaut
           // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-              var srcImgHeight 	= (is_numeric('#sizeh#'))    ? parseFloat('#sizeh#') 	: 65;
-              var srcImgWidth	= (is_numeric('#sizew#'))    ? parseFloat('#sizew#') 	: 95;
+              	var srcImgHeight 	= (is_numeric('#sizeh#'))    ? parseFloat('#sizeh#') 	: 65;
+              	var srcImgWidth		= (is_numeric('#sizew#'))    ? parseFloat('#sizew#') 	: 95;
           // Paramétrage Niveau
-              var level_0 		= (is_numeric('#level_0#'))  ? parseFloat('#level_0#') 	: 0;
-              var level_20 		= (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;	
-              var level_40  	= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
-              var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
-              var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
-      		  var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
-        // Paramétrage des images
-			  var srcImgURL 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
-      		  var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "battery_";
+              	var level_0 		= (is_numeric('#level_0#'))  ? parseFloat('#level_0#') 	: 0;
+              	var level_20 		= (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;	
+              	var level_40  		= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
+              	var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
+              	var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
+      		var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
+	// Paramétrage des images
+		var srcImgURL 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
+      		var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "battery_";
+              	var srcImglogoER	= ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "oups";
       // Update
-			var srcPictureID;     
-			var State = parseFloat(_options.display_value);	
-			if (State <= level_0){
-              	srcPictureID = "20";
-              	$(".spanCmd#id#").css( "color", "#f42433" );
-            } else if (State > level_0 && State <= level_20){
-              	srcPictureID = "20";
-              	$(".spanCmd#id#").css( "color", "#f42433" );
-            } else if (State > level_20 && State <= level_40){
-              	srcPictureID = "40";
-              	$(".spanCmd#id#").css( "color", "#f09c39" );
-            } else if (State > level_40 && State <=level_60){
-              	srcPictureID = "60";
-              	$(".spanCmd#id#").css( "color", "#f2f02c" );
-            } else if (State > level_60 && State <=level_80){
-              	srcPictureID = "80";
-              	$(".spanCmd#id#").css( "color", "#f09c39" );
-            } else if (State > level_80 && State <=level_100){
-              	srcPictureID = "100";
-              	$(".spanCmd#id#").css( "color", "#5df114" );
-            } else {
-              	srcPictureID = "error";
-              	$(".spanCmd#id#").css( "color", "#f42433" );
-            }    
-   
-		// Update Value or img
-          	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">'); 
-			$('.cmd[data-cmd_uid=#uid#] .state').text(State+'#unite#');
-			$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
-		}     
-   	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'}); 
-	</script>
+		var srcPictureID;     
+		var State = parseFloat(_options.display_value);	
+		if (State == level_0){
+              		srcPictureID = "20";
+              		$(".spanCmd#id#").css( "color", "#f42433" );
+            	} else if (State > level_0 && State <= level_20){
+              		srcPictureID = "20";
+              		$(".spanCmd#id#").css( "color", "#f42433" );
+            	} else if (State > level_20 && State <= level_40){
+              		srcPictureID = "40";
+              		$(".spanCmd#id#").css( "color", "#f09c39" );
+            	} else if (State > level_40 && State <=level_60){
+              		srcPictureID = "60";
+              		$(".spanCmd#id#").css( "color", "#f2f02c" );
+            	} else if (State > level_60 && State <=level_80){
+              		srcPictureID = "80";
+              		$(".spanCmd#id#").css( "color", "#f09c39" );
+            	} else if (State > level_80 && State <=level_100){
+              		srcPictureID = "100";
+              		$(".spanCmd#id#").css( "color", "#5df114" );
+            	} else {
+              		srcPictureID = "error";
+              		$(".spanCmd#id#").css( "color", "#f42433" );
+            	}    
+	// Update IMG + gestion erreur
+          	if (srcPictureID == "error"){
+                	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL +srcImglogoER+ '.png" style="height:60px;width:60px;">'); 
+                    } else {
+                      	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
+            	    }  
+		$('.cmd[data-cmd_uid=#uid#] .state').text(State+'#unite#');
+		$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
+		}     	
+	jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'}); 
+</script>
 </div>
