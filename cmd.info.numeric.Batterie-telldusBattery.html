@@ -65,9 +65,9 @@
             	}    
 	// Update IMG + gestion erreur
           	if (srcPictureID == "error"){
-                	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL +srcImglogoER+ +'.'+ srcImglogoER_T+'" style="height:60px;width:60px;">'); 
+                	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL +srcImglogoER +'.'+ srcImglogoER_T+'" style="height:60px;width:60px;">'); 
                     } else {
-                      	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ +'.'+ srcImglogo_T+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
+                      	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo +srcPictureID +'.'+ srcImglogo_T+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
             	    }  
 		$('.cmd[data-cmd_uid=#uid#] .state').text(State+'#unite#');
 		$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
