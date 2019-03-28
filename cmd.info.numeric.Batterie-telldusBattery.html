@@ -1,7 +1,7 @@
 <div style="padding:0;width:90px;min-height:62px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
  	<!-- Info Widget
 		Basé sur les widget de 	: Manticus
-		Mise à jour 			: JAG 20190318 : Correction Bug non actualisation des données (merci à Antoinekl1 & cadavor)
+		Mise à jour				: JAG 20190327 : Amélioration code Ajout variable pour définir l'extension du fichier (merci à fishes)
 	-->
 	<center>
 	<div class="row">
@@ -20,19 +20,24 @@
 	jeedom.cmd.update['#id#'] = function(_options){
 		// Options de personnalisation avec valeur par defaut
           // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-              	var srcImgHeight 	= (is_numeric('#sizeh#'))    ? parseFloat('#sizeh#') 	: 65;
-              	var srcImgWidth		= (is_numeric('#sizew#'))    ? parseFloat('#sizew#') 	: 95;
+              		var srcImgHeight 	= (is_numeric('#sizeh#'))    ? parseFloat('#sizeh#') 	: 65;
+              		var srcImgWidth		= (is_numeric('#sizew#'))    ? parseFloat('#sizew#') 	: 95;
           // Paramétrage Niveau
-              	var level_0 		= (is_numeric('#level_0#'))  ? parseFloat('#level_0#') 	: 0;
-              	var level_20 		= (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;	
-              	var level_40  		= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
-              	var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
-              	var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
-      		var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
+              		var level_0 			= (is_numeric('#level_0#'))  ? parseFloat('#level_0#') 	: 0;
+              		var level_20 		= (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;	
+              		var level_40  		= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
+              		var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
+              		var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
+			  		var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
 	// Paramétrage des images
-		var srcImgURL 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
-      		var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "battery_";
-              	var srcImglogoER	= ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "oups";
+					var srcImgURL 		= 'plugins/widget/core/template/dashboard/cmd.info.numeric.Batterie-telldusBattery/';
+				// Paramètrage du logo
+					var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "battery_";
+					var srcImglogo_T 	= ('#logo_type#'!='#'+'logo_type#') ? "#logo_type#" : "png";
+			  	// Paramètrage du logo ERREUR		  	  
+					var srcImglogoER		= ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "oups";
+					var srcImglogoER_T 	= ('#logo_error_type#'!='#'+'logo_error_type#') ? "#logo_error_type#" : "png";
+			  	
       // Update
 		var srcPictureID;     
 		var State = parseFloat(_options.display_value);	
@@ -60,9 +65,9 @@
             	}    
 	// Update IMG + gestion erreur
           	if (srcPictureID == "error"){
-                	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL +srcImglogoER+ '.png" style="height:60px;width:60px;">'); 
+                	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL +srcImglogoER+ +'.'+ srcImglogoER_T+'" style="height:60px;width:60px;">'); 
                     } else {
-                      	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ '.png" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
+                      	$('.cmd[data-cmd_uid=#uid#] .iconCmd').html('<img src="'+srcImgURL + srcImglogo+ +srcPictureID+ +'.'+ srcImglogo_T+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
             	    }  
 		$('.cmd[data-cmd_uid=#uid#] .state').text(State+'#unite#');
 		$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
