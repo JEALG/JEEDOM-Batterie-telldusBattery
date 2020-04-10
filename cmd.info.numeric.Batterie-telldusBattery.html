@@ -8,7 +8,7 @@
             <div class="title #hide_name#">
                 <div class="cmdName" style="#hideCmdName#">#name_display#</div>
             </div>
-          	<div class="state#id#" style="font-size: 1m;font-weight: bold; height: 20px"></div>
+            <div class="state#id#" style="font-size: 1m;font-weight: bold; height: 20px"></div>
             <div style="font-size: 2.5em;margin-top:-10px;" class="iconCmd#id#"></div>
             <!-- Historique -->
             <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;margin-top:-5px;">
@@ -17,63 +17,68 @@
         </center>
     </div>
     <script>
-        jeedom.cmd.update['#id#'] = function(_options){
+        jeedom.cmd.update['#id#'] = function(_options) {
             // Options de personnalisation avec valeur par defaut
-                // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
-                    var srcImgHeight 	= (is_numeric('#sizeh#')) ? parseFloat('#sizeh#') : 65;
-                    var srcImgWidth		= (is_numeric('#sizew#')) ? parseFloat('#sizew#') : 95;
-                    var srcImgSize      = 'height='+srcImgHeight+'px width='+srcImgWidth+'px';
-                // Paramétrage Niveau
-                    var level_0 		= (is_numeric('#level_0#')) ? parseFloat('#level_0#') 	: 0;
-                    var level_20 		= (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;	
-                    var level_40  		= (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
-                    var level_60 		= (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
-                    var level_80 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
-                    var level_100 		= (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
+            // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
+            var srcImgHeight = (is_numeric('#sizeh#')) ? parseFloat('#sizeh#') : 65;
+            var srcImgWidth = (is_numeric('#sizew#')) ? parseFloat('#sizew#') : 95;
+            var srcImgSize = 'height=' + srcImgHeight + 'px width=' + srcImgWidth + 'px';
+            // Paramétrage Niveau
+            var level_0 = (is_numeric('#level_0#')) ? parseFloat('#level_0#') : 0;
+            var level_20 = (is_numeric('#level_20#')) ? parseFloat('#level_20#') : 20.0;
+            var level_40 = (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
+            var level_60 = (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
+            var level_80 = (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
+            var level_100 = (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
             // Paramétrage des images
-                    var srcImgURL 		= 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/batterie/';
-                    var srcImgURL_ER    = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/erreur/';
-                // Paramètrage du logo
-                    var srcImglogo		= ('#logo#'!='#'+'logo#') ? "#logo#" : "ba_battery1_";
-                    var srcImglogo_T 	= ('#logo_type#'!='#'+'logo_type#') ? "#logo_type#" : "png";
-                // Paramètrage du logo ERREUR
-                    var srcImglogoER	= ('#logo_error#'!='#'+'logo_error#') ? "#logo_error#" : "er_oups1";
-                    var srcImglogoER_T 	= ('#logo_error_type#'!='#'+'logo_error_type#') ? "#logo_error_type#" : "png";
+            var srcImgURL = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/batterie/';
+            var srcImgURL_ER = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/erreur/';
+            // Paramètrage du logo
+            var srcImglogo = ('#logo#' != '#' + 'logo#') ? "#logo#" : "ba_battery1_";
+            var srcImglogo_T = ('#logo_type#' != '#' + 'logo_type#') ? "#logo_type#" : "png";
+            // Paramètrage du logo ERREUR
+            var srcImglogoER = ('#logo_error#' != '#' + 'logo_error#') ? "#logo_error#" : "er_oups1";
+            var srcImglogoER_T = ('#logo_error_type#' != '#' + 'logo_error_type#') ? "#logo_error_type#" : "png";
             // Update
-                var srcPictureID;
-                var State = parseFloat(_options.display_value);
-                if (State == level_0){
-                    srcPictureID = "20";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f42433" );
-                } else if (State > level_0 && State <= level_20){
-                    srcPictureID = "20";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f42433" );
-                } else if (State > level_20 && State <= level_40){
-                    srcPictureID = "40";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f09c39" );
-                } else if (State > level_40 && State <=level_60){
-                    srcPictureID = "60";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f2f02c" );
-                } else if (State > level_60 && State <=level_80){
-                    srcPictureID = "80";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f09c39" );
-                } else if (State > level_80 && State <=level_100){
-                    srcPictureID = "100";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#5df114" );
-                } else {
-                    srcPictureID = "error";
-                    $('.cmd[data-cmd_uid=#uid#] .state#id#').css( "color", "#f42433" );
-                    srcImgURL   = srcImgURL_ER;
-                }    
+            var srcPictureID;
+            var State = parseFloat(_options.display_value);
+            if (State == level_0) {
+                srcPictureID = "20";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f42433");
+            } else if (State > level_0 && State <= level_20) {
+                srcPictureID = "20";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f42433");
+            } else if (State > level_20 && State <= level_40) {
+                srcPictureID = "40";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f09c39");
+            } else if (State > level_40 && State <= level_60) {
+                srcPictureID = "60";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f2f02c");
+            } else if (State > level_60 && State <= level_80) {
+                srcPictureID = "80";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f09c39");
+            } else if (State > level_80 && State <= level_100) {
+                srcPictureID = "100";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#5df114");
+            } else {
+                srcPictureID = "error";
+                $('.cmd[data-cmd_uid=#uid#] .state#id#').css("color", "#f42433");
+                srcImgURL = srcImgURL_ER;
+            }
             // Update IMG + gestion erreur
-                if (srcPictureID == "error"){
-                    $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL +srcImglogoER +'.'+ srcImglogoER_T+'" style="height:60px;width:60px;">');
-                } else {
-                    $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="'+srcImgURL + srcImglogo +srcPictureID +'.'+ srcImglogo_T+'" style="height:' + srcImgHeight +'px;width:' + srcImgWidth +'px;">');
-                }  
-                $('.cmd[data-cmd_uid=#uid#] .state#id#').empty().append(_options.display_value+' '+'#unite#');
-                $('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate);
+            if (srcPictureID == "error") {
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogoER + '.' + srcImglogoER_T + '" style="height:60px;width:60px;">');
+            } else {
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogo + srcPictureID + '.' + srcImglogo_T + '" style="height:' + srcImgHeight + 'px;width:' + srcImgWidth + 'px;">');
+            }
+            $('.cmd[data-cmd_uid=#uid#] .state#id#').empty().append(_options.display_value + ' ' + '#unite#');
+            $('.cmd[data-cmd_id=#id#]').attr('title', 'Valeur du ' + _options.valueDate);
         }
-        jeedom.cmd.update['#id#']({display_value:'#state#',valueDate:'#valueDate#',collectDate:'#collectDate#',alertLevel:'#alertLevel#'});
-</script>
+        jeedom.cmd.update['#id#']({
+            display_value: '#state#',
+            valueDate: '#valueDate#',
+            collectDate: '#collectDate#',
+            alertLevel: '#alertLevel#'
+        });
+    </script>
 </div>
