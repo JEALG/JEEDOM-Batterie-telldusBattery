@@ -1,8 +1,10 @@
-<div style="padding:0;width:90px;min-height:62px;" class="cmd tooltips cmd-widget cursor container-fluid #history# " data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#" data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
+<div style="padding:0;width:90px;min-height:62px;" class="cmd tooltips cmd-widget cursor container-fluid #history# "
+    data-type="info" data-subtype="numeric" data-cmd_id="#id#" data-cmd_uid="#uid#" data-eqLogic_id="#eqLogic_id#"
+    data-eqLogic_id="#eqLogic_id#" title="#collectDate#">
     <!-- Info Widget
         Widget de           : JAG
         Widget pour le Core : V4
-        Mise à jour         : JAG 20200502 => Ajout Version Core
+        Mise à jour         : JAG 20200901 => Ajout Version Core => Correction Level 100
 	-->
     <div class="row">
         <center>
@@ -13,12 +15,14 @@
             <div style="font-size: 2.5em;margin-top:-10px;" class="iconCmd#id#"></div>
             <!-- Historique -->
             <div class="cmdStats #hide_history#" style="#displayHistory# font-size : 10px;margin-top:-5px;">
-                <span title="Min" class="tooltips">#minHistoryValue##unite#</span>|<span title="Moy" class="tooltips">#averageHistoryValue##unite#</span>|<span title="Max" class="tooltips">#maxHistoryValue##unite#</span> <i class="#tendance#"></i>
+                <span title="Min" class="tooltips">#minHistoryValue##unite#</span>|<span title="Moy"
+                    class="tooltips">#averageHistoryValue##unite#</span>|<span title="Max"
+                    class="tooltips">#maxHistoryValue##unite#</span> <i class="#tendance#"></i>
             </div>
         </center>
     </div>
     <script>
-        jeedom.cmd.update['#id#'] = function(_options) {
+        jeedom.cmd.update['#id#'] = function (_options) {
             // Options de personnalisation avec valeur par defaut
             // Paramètre "sizehw" : à déclarer en pixels - 80 maxi
             var srcImgHeight = (is_numeric('#sizeh#')) ? parseFloat('#sizeh#') : 65;
@@ -30,7 +34,7 @@
             var level_40 = (is_numeric('#level_40#')) ? parseFloat('#level_40#') : 40.0;
             var level_60 = (is_numeric('#level_60#')) ? parseFloat('#level_60#') : 60.0;
             var level_80 = (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 80.0;
-            var level_100 = (is_numeric('#level_80#')) ? parseFloat('#level_80#') : 100.0;
+            var level_100 = (is_numeric('#level_100#')) ? parseFloat('#level_100#') : 100.0;
             // Paramétrage des images
             var srcImgURL = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/batterie/';
             var srcImgURL_ER = 'data/customTemplates/dashboard/cmd.action.other.Multi-action-Defaut/erreur/';
@@ -68,9 +72,12 @@
             }
             // Update IMG + gestion erreur
             if (srcPictureID == "error") {
-                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogoER + '.' + srcImglogoER_T + '" style="height:60px;width:60px;">');
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogoER + '.' +
+                    srcImglogoER_T + '" style="height:60px;width:60px;">');
             } else {
-                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogo + srcPictureID + '.' + srcImglogo_T + '" style="height:' + srcImgHeight + 'px;width:' + srcImgWidth + 'px;">');
+                $('.cmd[data-cmd_uid=#uid#] .iconCmd#id#').html('<img src="' + srcImgURL + srcImglogo +
+                    srcPictureID + '.' + srcImglogo_T + '" style="height:' + srcImgHeight + 'px;width:' +
+                    srcImgWidth + 'px;">');
             }
             $('.cmd[data-cmd_uid=#uid#] .state#id#').empty().append(_options.display_value + ' ' + '#unite#');
             $('.cmd[data-cmd_id=#id#]').attr('title', 'Valeur du ' + _options.valueDate);
@@ -81,6 +88,5 @@
             collectDate: '#collectDate#',
             alertLevel: '#alertLevel#'
         });
-
     </script>
 </div>
